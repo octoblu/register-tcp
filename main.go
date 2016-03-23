@@ -13,37 +13,37 @@ import (
 	"github.com/codegangsta/cli"
 	"github.com/coreos/go-semver/semver"
 	"github.com/fatih/color"
-	"github.com/octoblu/register-vulcan/healthchecker"
-	"github.com/octoblu/register-vulcan/vctl"
+	"github.com/octoblu/register-tcp/healthchecker"
+	"github.com/octoblu/register-tcp/vctl"
 	De "github.com/tj/go-debug"
 )
 
-var debug = De.Debug("register-vulcan:main")
+var debug = De.Debug("register-tcp:main")
 
 func main() {
 	app := cli.NewApp()
-	app.Name = "register-vulcan"
+	app.Name = "register-tcp"
 	app.Version = version()
 	app.Action = run
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:   "backend-id, b",
-			EnvVar: "REGISTER_VULCAN_BACKEND_ID",
+			EnvVar: "REGISTER_TCP_BACKEND_ID",
 			Usage:  "Backend id to register server to",
 		},
 		cli.StringFlag{
 			Name:   "server-id, s",
-			EnvVar: "REGISTER_VULCAN_SERVER_ID",
+			EnvVar: "REGISTER_TCP_SERVER_ID",
 			Usage:  "Server ID",
 		},
 		cli.StringFlag{
 			Name:   "uri, u",
-			EnvVar: "REGISTER_VULCAN_URI",
+			EnvVar: "REGISTER_TCP_URI",
 			Usage:  "URI to healthcheck, must return status 200",
 		},
 		cli.StringFlag{
 			Name:   "vulcan-uri, V",
-			EnvVar: "REGISTER_VULCAN_VULCAN_URI",
+			EnvVar: "REGISTER_TCP_VULCAN_URI",
 			Usage:  "VULCAN URI to register server to",
 		},
 	}
@@ -136,16 +136,16 @@ func getOpts(context *cli.Context) (string, string, string, string) {
 		cli.ShowAppHelp(context)
 
 		if backendID == "" {
-			color.Red("  Missing required flag --backend-id or REGISTER_VULCAN_BACKEND_ID")
+			color.Red("  Missing required flag --backend-id or REGISTER_TCP_BACKEND_ID")
 		}
 		if serverID == "" {
-			color.Red("  Missing required flag --server-id or REGISTER_VULCAN_SERVER_ID")
+			color.Red("  Missing required flag --server-id or REGISTER_TCP_SERVER_ID")
 		}
 		if uri == "" {
-			color.Red("  Missing required flag --uri or REGISTER_VULCAN_URI")
+			color.Red("  Missing required flag --uri or REGISTER_TCP_URI")
 		}
 		if vulcanURI == "" {
-			color.Red("  Missing required flag --vulcan-uri or REGISTER_VULCAN_VULCAN_URI")
+			color.Red("  Missing required flag --tcp-uri or REGISTER_TCP_VULCAN_URI")
 		}
 		os.Exit(1)
 	}
