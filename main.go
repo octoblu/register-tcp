@@ -160,8 +160,8 @@ func validateURI(uriStr string) {
 	uri, err := url.Parse(uriStr)
 	FatalIfError(fmt.Sprintf("Failed to parse uri: %v", uriStr), err)
 
-	if uri.Scheme != "http" && uri.Scheme != "https" {
-		log.Fatalf("uri protocol must be one of http/https: %v\n", uriStr)
+	if uri.Scheme == "" {
+		log.Fatalf("uri protocol is required: %v\n", uriStr)
 	}
 
 	parts := strings.Split(uri.Host, ":")

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-APP_NAME=register-vulcan
+APP_NAME=register-tcp
 TMP_DIR=$PWD/tmp
 IMAGE_NAME=local/$APP_NAME
 

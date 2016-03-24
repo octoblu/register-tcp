@@ -1,20 +1,25 @@
 package healthchecker
 
 import (
-	"net/http"
-	"time"
+	"fmt"
+	"log"
+	"net"
+	"net/url"
 )
 
-// Healthy returns true if the HTTP response to
-// a GET request to the URI is a 200, false
-// otherwise
-func Healthy(uri string) bool {
-	client := &http.Client{Timeout: time.Second * 1}
-	response, err := client.Get(uri)
-
+// Healthy returns true if the TCP request
+// succeeds, false otherwise
+func Healthy(uriStr string) bool {
+	uri, err := url.Parse(uriStr)
 	if err != nil {
-		return false
+		log.Fatalln("Error parsing url", err.Error())
 	}
 
-	return response.StatusCode == 200
+	conn, err := net.Dial("tcp", uri.Host)
+	if err != nil {
+		fmt.Println("net.Dial err:", err.Error())
+		return false
+	}
+	conn.Close()
+	return true
 }
